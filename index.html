@@ -1,46 +1,64 @@
-<html style="height: 100%;">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <style>
-    body {
-      margin: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thumbs Up/Down Example</title>
+    <style>
+        .thumbs-container {
+            display: flex;
+            gap: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+        }
 
-    div {
-      margin: 0;
-      margin-top: 10px;
-    }
-  </style>
+        .thumb {
+            color: #ccc; /* Default grey color */
+        }
+
+        .thumb.active {
+            color: #007bff; /* Highlight color for active state */
+        }
+    </style>
+    <!-- Include favicons for thumbs up/down -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-  <div
-    data-lyket-type="clap"
-    data-lyket-id="0505d959fc64457cb0878f85c3bdb38b"
-    data-lyket-namespace="blog"
-    data-lyket-template="Heart"
-    style="text-align: center;"
-    data-like-id="unique-identifier-1"  />
 
-  <script src="https://unpkg.com/@lyket/widget@latest/dist/lyket.js?apiKey=pt_0c300c5004bdd833af6d3f517678e9"></script>
-  <script>
-    const likeButton = document.querySelector('div[data-like-id]');
-    const likeId = likeButton.dataset.likeId; // Get the unique identifier
+<div class="thumbs-container">
+    <i id="thumbsUp" class="fas fa-thumbs-up thumb"></i>
+    <i id="thumbsDown" class="fas fa-thumbs-down thumb"></i>
+</div>
 
-    // Function to update and display the like count
-    function updateLikeCount(count) {
-      likeButton.textContent = `Likes (${count})`;
+<script>
+    // Get the thumbs up and thumbs down elements
+const thumbsUp = document.getElementById('thumbsUp');
+const thumbsDown = document.getElementById('thumbsDown');
+
+// Add event listeners to both icons
+thumbsUp.addEventListener('click', () => {
+    if (thumbsUp.classList.contains('active')) {
+        // If already active, deselect it
+        thumbsUp.classList.remove('active');
+    } else {
+        // If not active, activate it and deactivate the other
+        thumbsUp.classList.add('active');
+        thumbsDown.classList.remove('active');
     }
+});
 
-    // Check if a like count for this button exists in local storage
-    const storedCount = localStorage.getItem(`likeCount-${likeId}`);
-    let count = storedCount ? parseInt(storedCount) : 0;
-    updateLikeCount(count); // Initially display stored count
+thumbsDown.addEventListener('click', () => {
+    if (thumbsDown.classList.contains('active')) {
+        // If already active, deselect it
+        thumbsDown.classList.remove('active');
+    } else {
+        // If not active, activate it and deactivate the other
+        thumbsDown.classList.add('active');
+        thumbsUp.classList.remove('active');
+    }
+});
 
-    // Handle like click event
-    likeButton.addEventListener('click', () => {
-      count++; // Increment count on click
-      updateLikeCount(count);
-      localStorage.setItem(`likeCount-${likeId}`, count); // Update local storage
-    });
-  </script>
+</script>
+
 </body>
 </html>
