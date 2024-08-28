@@ -1,25 +1,46 @@
 <html style="height: 100%;">
-  <head>
-    <style>
-      body {
-        margin: 0;
-      }
+<head>
+  <style>
+    body {
+      margin: 0;
+    }
 
-      div {
-        margin: 0;
-        margin-top: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    <div
-      data-lyket-type="clap"
-      data-lyket-id="0505d959fc64457cb0878f85c3bdb38b"
-      data-lyket-namespace="blog"
-      data-lyket-template="Heart"
-      style="text-align: center;"
-     />
+    div {
+      margin: 0;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div
+    data-lyket-type="clap"
+    data-lyket-id="0505d959fc64457cb0878f85c3bdb38b"
+    data-lyket-namespace="blog"
+    data-lyket-template="Heart"
+    style="text-align: center;"
+    data-like-id="unique-identifier-1"  />
 
-    <script src="https://unpkg.com/@lyket/widget@latest/dist/lyket.js?apiKey=pt_0c300c5004bdd833af6d3f517678e9"></script>
-  </body>
+  <script src="https://unpkg.com/@lyket/widget@latest/dist/lyket.js?apiKey=pt_0c300c5004bdd833af6d3f517678e9"></script>
+  <script>
+    const likeButton = document.querySelector('div[data-like-id]');
+    const likeId = likeButton.dataset.likeId; // Get the unique identifier
+
+    // Function to update and display the like count
+    function updateLikeCount(count) {
+      likeButton.textContent = `Likes (${count})`;
+    }
+
+    // Check if a like count for this button exists in local storage
+    const storedCount = localStorage.getItem(`likeCount-${likeId}`);
+    let count = storedCount ? parseInt(storedCount) : 0;
+    updateLikeCount(count); // Initially display stored count
+
+    // Handle like click event
+    likeButton.addEventListener('click', () => {
+      count++; // Increment count on click
+      updateLikeCount(count);
+      localStorage.setItem(`likeCount-${likeId}`, count); // Update local storage
+    });
+  </script>
+</body>
 </html>
